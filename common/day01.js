@@ -62,6 +62,7 @@ console.log(foo === 5 || doSomething()); // 10
 // 6. 删除重复值
 const array2 = [5, 4, 7, 8, 9, 2, 7, 5];
 const res = array2.filter((item, index, arr) => arr.indexOf(item) === index);
+
 const res1 = [...new Set(array2)];
 console.log(res, res1); // [ 5, 4, 7, 8, 9, 2 ] [ 5, 4, 7, 8, 9, 2 ]
 
@@ -88,3 +89,24 @@ const obj = { a: 1, b: 2, c: 3 };
 console.log(Object.entries(obj)); // [ [ 'a', 1 ], [ 'b', 2 ], [ 'c', 3 ] ]
 console.log(Object.keys(obj)); // [ 'a', 'b', 'c' ]
 console.log(Object.values(obj)); // [ 1, 2, 3 ]
+
+// 9. url 获取参数 并转为对象
+const getParameters = (URL) =>
+  JSON.parse(
+    `{"${decodeURI(URL.split("?")[1])
+      .replace(/"/g, '\\"')
+      .replace(/&/g, '","')
+      .replace(/=/g, '":"')}"}`
+  );
+
+console.log(
+  getParameters("https://www.google.com.hk/search?q=js+md&newwindow=1") //{ q: 'js+md', newwindow: '1' }
+);
+
+// 10 检查对象是否为空
+function isEmpty(obj) {
+  return Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
+}
+
+console.log(isEmpty({})); // true
+console.log(isEmpty({ a: 1 })); // false
